@@ -5,7 +5,7 @@
 ```bash
 python -m venv env
 source env/bin/activate
-pip install tensorflow==2.0.0 jupytext==1.2.4 scipy matplotlib numpy
+pip install -r requirements.txt
 python main.py
 
 # pip install nbdime

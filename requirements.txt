@@ -1,0 +1,5 @@
+tensorflow==2.0.0
+jupytext==1.2.4
+scipy
+matplotlib
+numpy
