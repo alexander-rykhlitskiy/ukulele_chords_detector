@@ -4,6 +4,11 @@ The goal was to teach neural network to detect chord played on ukulele. Network 
 Recorded sound samples are located in `samples` directory. Each directory corresponds to some kind of sound. Each sound directory contains directories for training and for testing trained network. New samples can be collected using steps at the bottom of the file.
 
 ## Installation and running
+### binder
+Just click
+
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/alexander-rykhlitskiy/ukulele_chords_detector/master)
+
 ### venv
 ```bash
 python -m venv env
