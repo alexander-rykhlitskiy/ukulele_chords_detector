@@ -1,7 +1,7 @@
 # Ukulele Chords Detector
-The goal is to teach Keras neural network to detect chord played on ukulele, but currently it can only detect notes.
+The goal was to teach neural network to detect chord played on ukulele. Network was trained and tested on single notes, but any other short sound (chord, bang, knock) can be categorized too. The only thing needed for that is `wav` files of these sounds.
 
-Notes samples are in `samples` folder. Each folder corresponds to some note. Each note folder contains folders for training and for testing trained network. New samples can be collected using steps below.
+Recorded sound samples are located in `samples` directory. Each directory corresponds to some kind of sound. Each sound directory contains directories for training and for testing trained network. New samples can be collected using steps at the bottom of the file.
 
 ## Installation and running
 ### venv
@@ -34,11 +34,16 @@ Ubuntu
 sudo apt-get install sox
 ```
 
-### Record and split note or chord
+### Record and split the sound
 ```bash
-./record_chord.sh 30
+./record.sh 30
 ```
- After running this script, start playing one note many times in a row with some interval (1 second is enough) for 30 seconds in this case. Output is as many files as you pulled the string. Please check that each file has exactly one note with `play splitted_chord001.wav` (or any other player), remove incorrect files and move correct ones into `samples` folder.
+ After running this script, start playing one note (sound) many times in a row with some interval (1 second is enough) for 30 seconds in this case. Output is as many files as you pulled the string (made any sound). Please check that each file has exactly one sample of sound with `play splitted_chord001.wav` (or any other player), remove incorrect files and move correct ones into `samples` directory.
 
-### TODO
-* Detect notes for training by folders in `samples` folder
+ New sounds can be added in `samples` directory in path like
+ ```bash
+ samples/{sound name, e.g. A or C or E note, Dm chord, bang}/{train or test}/{anything (e.g. number of recording)}/*.wav
+ ```
+
+## Development
+[jupytext](https://github.com/mwouts/jupytext) is used, so both python command with `main.py` and jupyter with `main.ipynb` can run the program. After changing one of these files please don't forget to update another running jupyter.

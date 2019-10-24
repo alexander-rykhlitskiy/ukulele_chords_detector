@@ -22,7 +22,7 @@ from scipy.io import wavfile
 import os
 
 SHIFT_START = 2000
-CAPTURE     = 15000
+CAPTURE     = 16000
 
 # https://stackoverflow.com/questions/53308674/audio-frequencies-in-python
 def read_wav(wav_file_name):
@@ -103,7 +103,7 @@ train_labels = tf.convert_to_tensor(list(itertools.chain.from_iterable(train_lab
 train_files_data = files_to_tensors(sound_files)
 
 # %%
-model.fit(train_files_data, train_labels, epochs=4)
+model.fit(train_files_data, train_labels, epochs=5)
 
 # %%
 def predict_files(files):
