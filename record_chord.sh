@@ -22,3 +22,7 @@ sox -V3 audio-clean.wav splitted_chord.wav silence 1 0.1 0.1% 1 0.1 0.1% : newfi
 find . -type f -name '*.wav' -mmin -5 -size -100k -delete
 
 rm audio-clean.wav chords.wav noise-audio.wav noise.prof
+
+# normalize (seems to be not effective for training)
+# https://superuser.com/questions/323119/how-can-i-normalize-audio-using-ffmpeg
+# ffmpeg-normalize *.wav -f -of ./ -ext wav
