@@ -89,8 +89,7 @@ def parse_sound_name(path):
 sound_names_files = {}
 for sound_dir in glob.glob(os.path.join(SAMPLES_DIR, '*')):
     sound_files_mask = os.path.join(sound_dir, TRAIN_DIR, '*', '*.wav')
-    name = parse_sound_name(sound_dir)
-    sound_names_files[name] = sound_names_files.get(name, []) + glob.glob(sound_files_mask)
+    sound_names_files[parse_sound_name(sound_dir)] = glob.glob(sound_files_mask)
 
 sound_names_index = {sound_name: idx for idx, sound_name in enumerate(sound_names_files.keys())}
 sound_names_index_reverted = {v: k for k, v in sound_names_index.items()}
