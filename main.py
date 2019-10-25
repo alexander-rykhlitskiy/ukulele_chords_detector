@@ -22,7 +22,7 @@ from scipy.io import wavfile
 import os
 
 SHIFT_START = 2000
-CAPTURE     = 16000
+CAPTURE     = 5000
 
 # https://stackoverflow.com/questions/53308674/audio-frequencies-in-python
 def read_wav(wav_file_name):

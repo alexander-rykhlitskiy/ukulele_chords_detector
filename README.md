@@ -4,28 +4,33 @@ The goal was to teach neural network to detect chord played on ukulele. Network 
 Recorded sound samples are located in `samples` directory. Each directory corresponds to some kind of sound. Each sound directory contains directories for training and for testing trained network. New samples can be collected using steps at the bottom of the file.
 
 ## Installation and running
-### binder
+### Binder
 Just click
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/alexander-rykhlitskiy/ukulele_chords_detector/master)
 
-### venv
-```bash
-python -m venv env
-source env/bin/activate
-pip install -r requirements.txt
-python main.py
-
-# pip install nbdime
-# nbdime config-git --enable --global
-```
+Open `main.ipynb` and click `Cell -> Run all`
 
 ### Docker
 ```bash
 docker build -t ukulele_chords_detector .
-docker run -v $(pwd):/app -it --rm -p 8888:8888 ukulele_chords_detector
+
+docker run -v $PWD:/app -it --rm -p 8888:8888 ukulele_chords_detector python main.py
+# or to run jupyter lab
+docker run -v $PWD:/app -it --rm -p 8888:8888 ukulele_chords_detector
 ```
 
+### venv
+First install python 3.7. Then
+```bash
+python -m venv env
+source env/bin/activate
+pip install -r requirements.txt
+
+python main.py
+# or to run jupyter lab
+jupyter lab
+```
 ## Collecting data for training
 Install [sox](http://sox.sourceforge.net/)
 
