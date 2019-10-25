@@ -4,7 +4,7 @@
 # https://superuser.com/questions/889912/how-to-record-10-seconds-of-audio-with-sox
 # man sox | grep -A 15 "\-b BITS"
 # man sox | grep -A 20 "\-r, --rate"
-sox -b 32 -e unsigned-integer -r 96k -c 2 -d --clobber ./chords.wav trim 0 $1
+sox -b 32 -e unsigned-integer -r 96k -c 2 -d --clobber chords.wav trim 0 $1
 
 # denoise
 # https://stackoverflow.com/questions/44159621/how-to-denoise-audio-with-sox
