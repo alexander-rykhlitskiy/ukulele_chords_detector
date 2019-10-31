@@ -3,6 +3,8 @@ The goal was to teach neural network to detect chord played on ukulele. Network 
 
 Recorded sound samples are located in `samples` directory. Each directory corresponds to some kind of sound. Each sound directory contains directories for training and for testing trained network. New samples can be collected using steps at the bottom of the file.
 
+*For implementation of this task using Uber's Ludwig toolbox see https://github.com/alexander-rykhlitskiy/ukulele_chords_detector_ludwig*
+
 ## Installation and running
 ### Binder
 Just click
