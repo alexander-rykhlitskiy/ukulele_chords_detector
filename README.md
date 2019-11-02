@@ -57,5 +57,9 @@ sudo apt-get install sox
  samples/{sound name, e.g. A or C or E note, Dm chord, bang}/{train or test}/{anything (e.g. number of recording)}/*.wav
  ```
 
+## TODO
+* Create confusion matrix https://www.tensorflow.org/tensorboard/image_summaries#building_an_image_classifier
+* Rescale values to (0..1)
+
 ## Development
 [jupytext](https://github.com/mwouts/jupytext) is used, so both python command with `main.py` and jupyter with `main.ipynb` can run the program. After changing one of these files please don't forget to update another running jupyter.
