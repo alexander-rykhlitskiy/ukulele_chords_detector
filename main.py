@@ -96,6 +96,8 @@ train_files = list_files(TRAIN_DIR)
 test_files  = list_files(TEST_DIR)
 
 # %%
+import datetime
+
 def files_to_tensors(files):
     return tf.convert_to_tensor([tf.convert_to_tensor(fetch_frequencies(file), np.int32) for file in files])
 
@@ -106,7 +108,12 @@ def labeled_files_to_tensors(labeled_files):
 
 x, y           = labeled_files_to_tensors(train_files)
 x_test, y_test = labeled_files_to_tensors(test_files)
-history = model.fit(x, y, validation_data=(x_test, y_test), epochs=5)
+
+log_dir = "logs/fit/" + datetime.datetime.now().strftime("%Y%m%d-%H%M%S")
+tensorboard_callback = tf.keras.callbacks.TensorBoard(log_dir=log_dir)
+
+model.fit(x, y, validation_data=(x_test, y_test), callbacks=[tensorboard_callback], epochs=5)
+
 
 # %%
 # became kind of legacy after introducing validation_data param.
@@ -119,3 +126,7 @@ def predict_files(files):
         print(f'{sound_name} - {files[idx]}')
 
 predict_files(list(test_files.keys()))
+
+# %%
+%load_ext tensorboard
+%tensorboard --logdir logs/fit
