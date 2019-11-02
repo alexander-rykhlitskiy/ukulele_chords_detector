@@ -61,10 +61,6 @@ show_frequency_spectrum(os.path.join(SAMPLES_DIR, 'C', TRAIN_DIR, '1', 'splitted
 show_frequency_spectrum(os.path.join(SAMPLES_DIR, 'E', TRAIN_DIR, '1', 'splitted_chord007.wav'))
 
 # %%
-def files_to_tensors(files):
-    return tf.convert_to_tensor([tf.convert_to_tensor(fetch_frequencies(file), np.int32) for file in files])
-
-# %%
 # TensorFlow and tf.keras
 import tensorflow as tf
 from tensorflow import keras
@@ -82,46 +78,44 @@ model.compile(optimizer='adam',
 import glob
 import itertools
 
-def parse_sound_name(path):
-    sound_folders_depth = 1
-    return os.path.normpath(path).split(os.path.sep)[sound_folders_depth]
-
-sound_names_files = {}
-for sound_dir in glob.glob(os.path.join(SAMPLES_DIR, '*')):
-    sound_files_mask = os.path.join(sound_dir, TRAIN_DIR, '*', '*.wav')
-    sound_names_files[parse_sound_name(sound_dir)] = glob.glob(sound_files_mask)
-
-sound_names_index = {sound_name: idx for idx, sound_name in enumerate(sound_names_files.keys())}
+sound_names_index = {sound_name: idx for idx, sound_name in enumerate(os.listdir(SAMPLES_DIR))}
 sound_names_index_reverted = {v: k for k, v in sound_names_index.items()}
 print('Following sounds are going to be categorized')
 print(list(sound_names_index.keys()))
 
-sound_files = list(itertools.chain.from_iterable(sound_names_files.values()))
-train_labels = [[sound_names_index[sound_name]] * len(files) for sound_name, files in sound_names_files.items()]
-train_labels = tf.convert_to_tensor(list(itertools.chain.from_iterable(train_labels)))
-train_files_data = files_to_tensors(sound_files)
+# %%
+def parse_sound_name(path):
+    sound_folders_depth = 1
+    return os.path.normpath(path).split(os.path.sep)[sound_folders_depth]
+
+def list_files(directory):
+    files = glob.glob(os.path.join(SAMPLES_DIR, '*', directory, '*', '*.wav'))
+    return {file: sound_names_index[parse_sound_name(file)] for file in files}
+
+train_files = list_files(TRAIN_DIR)
+test_files  = list_files(TEST_DIR)
 
 # %%
-model.fit(train_files_data, train_labels, epochs=5)
+def files_to_tensors(files):
+    return tf.convert_to_tensor([tf.convert_to_tensor(fetch_frequencies(file), np.int32) for file in files])
+
+def labeled_files_to_tensors(labeled_files):
+    x = files_to_tensors(labeled_files.keys())
+    y = tf.convert_to_tensor(list(labeled_files.values()))
+    return x, y
+
+x, y           = labeled_files_to_tensors(train_files)
+x_test, y_test = labeled_files_to_tensors(test_files)
+history = model.fit(x, y, validation_data=(x_test, y_test), epochs=5)
 
 # %%
+# became kind of legacy after introducing validation_data param.
+# But still used to get predictions for specific files.
+
 def predict_files(files):
-    print()
     files_data = files_to_tensors(files)
-    correct_predictions = 0
     for idx, prediction in enumerate(model.predict(files_data)):
         sound_name = sound_names_index_reverted[list(prediction).index(1)]
         print(f'{sound_name} - {files[idx]}')
-        if parse_sound_name(files[idx]) == sound_name:
-            correct_predictions += 1
-    print('=' * 10)
-    print(f'Prediction success rate: {round(correct_predictions / len(files) * 100, 2)}%')
-    print()
 
-test_files = glob.glob(os.path.join(SAMPLES_DIR, '*', TEST_DIR, '*', '*.wav'))
-predict_files(test_files)
-
-# %%
-predict_files([os.path.join(SAMPLES_DIR, 'A', TRAIN_DIR, '1_out_of_tune', 'splitted_chord009.wav')])
-
-# %%
+predict_files(list(test_files.keys()))
