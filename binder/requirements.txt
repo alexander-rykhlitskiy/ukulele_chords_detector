@@ -1,1 +1,5 @@
-../requirements.txt
+tensorflow==2.11.1
+jupytext
+scipy
+matplotlib
+numpy
